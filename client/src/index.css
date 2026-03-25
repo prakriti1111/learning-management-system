@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { min-height: 100vh; transition: background-color 0.2s, color 0.2s; }
+  h1, h2, h3, h4 { font-family: 'Nunito', sans-serif; font-weight: 700; }
+  .dark body         { background-color: #0d0f14; color: #e2e4ed; }
+  .dark h1,.dark h2,.dark h3,.dark h4 { color: #f0f2f8; }
+}
+
+@layer components {
+  /* ── Cards ─────────────────────────────────────────────── */
+  .card    { @apply bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-5; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+  .card-sm { @apply bg-white dark:bg-gray-900 rounded-xl  border border-gray-100 dark:border-gray-800 p-4; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+
+  /* ── Buttons ────────────────────────────────────────────── */
+  .btn        { @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-150 cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border-none outline-none; font-family:'Nunito',sans-serif; }
+  .btn-teal   { @apply bg-[#5DCAA5] text-[#04342C] hover:bg-[#1D9E75] hover:text-white; }
+  .btn-indigo { @apply bg-[#7F77DD] text-white hover:bg-[#534AB7]; }
+  .btn-blue   { @apply bg-[#185FA5] text-white hover:bg-[#0C447C]; }
+  .btn-amber  { @apply bg-[#EF9F27] text-[#412402] hover:bg-[#BA7517] hover:text-white; }
+  .btn-coral  { @apply bg-[#D85A30] text-white hover:bg-[#993C1D]; }
+  .btn-white  { @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700; }
+  .btn-ghost  { @apply bg-transparent text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800; }
+  .btn-danger { @apply bg-red-500 text-white hover:bg-red-600; }
+  .btn-success{ @apply bg-emerald-500 text-white hover:bg-emerald-600; }
+  .btn-sm     { @apply px-3 py-1.5 text-xs rounded-lg; }
+  .btn-lg     { @apply px-7 py-3.5 text-base rounded-2xl; }
+  .btn-full   { @apply w-full; }
+  .btn-icon   { @apply p-2 rounded-xl; }
+
+  /* ── Form elements ──────────────────────────────────────── */
+  .input    { @apply w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#5DCAA5]/40 focus:border-[#5DCAA5] transition-all duration-150; }
+  .select   { @apply w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#5DCAA5]/40 focus:border-[#5DCAA5] transition-all duration-150 cursor-pointer; }
+  .textarea  { @apply w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-[#5DCAA5]/40 focus:border-[#5DCAA5] transition-all duration-150; }
+  .label      { @apply block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-wide; font-family:'Nunito',sans-serif; }
+  .form-group { @apply flex flex-col gap-1 mb-4; }
+
+  /* ── Badges ─────────────────────────────────────────────── */
+  .badge        { @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-bold; font-family:'Nunito',sans-serif; }
+  .badge-teal   { @apply bg-[#E1F5EE] dark:bg-[#085041]/40 text-[#085041] dark:text-[#5DCAA5]; }
+  .badge-indigo { @apply bg-[#EEEDFE] dark:bg-[#3C3489]/40 text-[#3C3489] dark:text-[#AFA9EC]; }
+  .badge-amber  { @apply bg-[#FAEEDA] dark:bg-[#633806]/40 text-[#633806] dark:text-[#FAC775]; }
+  .badge-coral  { @apply bg-[#FAECE7] dark:bg-[#712B13]/40 text-[#712B13] dark:text-[#F0997B]; }
+  .badge-blue   { @apply bg-[#E6F1FB] dark:bg-[#185FA5]/30 text-[#185FA5] dark:text-[#85B7EB]; }
+  .badge-red    { @apply bg-red-50    dark:bg-red-900/30    text-red-700   dark:text-red-400; }
+  .badge-green  { @apply bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400; }
+  .badge-gray   { @apply bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400; }
+
+  /* ── Progress bar ───────────────────────────────────────── */
+  .progress-track { @apply h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden; }
+  .progress-fill  { @apply h-full rounded-full transition-all duration-500; }
+
+  /* ── Avatar ─────────────────────────────────────────────── */
+  .avatar    { @apply rounded-full flex items-center justify-center font-bold flex-shrink-0; font-family:'Nunito',sans-serif; }
+  .avatar-sm { @apply w-8  h-8  text-xs; }
+  .avatar-md { @apply w-10 h-10 text-sm; }
+  .avatar-lg { @apply w-14 h-14 text-lg; }
+
+  /* ── Sidebar nav ─────────────────────────────────────────── */
+  .sidenav      { @apply w-60 bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800/60 min-h-screen flex flex-col py-5 sticky top-0; transition:background-color 0.2s; }
+  .sidenav-link { @apply flex items-center gap-3 px-4 py-2.5 mx-2 rounded-xl text-sm font-bold text-gray-500 dark:text-gray-400 no-underline transition-all duration-150 hover:bg-gray-50 dark:hover:bg-gray-800/60 hover:text-gray-900 dark:hover:text-gray-100; font-family:'Nunito',sans-serif; }
+  .sidenav-link.active { @apply bg-[#E1F5EE] dark:bg-[#085041]/20 text-[#085041] dark:text-[#5DCAA5]; }
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  .app-layout  { @apply flex min-h-screen bg-gray-50 dark:bg-[#0d0f14] transition-colors duration-200; }
+  .app-content { @apply flex-1 overflow-y-auto; }
+  .page        { @apply max-w-4xl  mx-auto px-6 py-8; }
+  .page-wide   { @apply max-w-6xl  mx-auto px-6 py-8; }
+
+  /* ── Metric cards ───────────────────────────────────────── */
+  .metric-card  { @apply bg-gray-50 dark:bg-gray-800/60 rounded-2xl p-4 border border-gray-100 dark:border-gray-700/50; }
+  .metric-value { @apply text-3xl font-black text-gray-900 dark:text-gray-50; font-family:'Nunito',sans-serif; }
+  .metric-label { @apply text-xs font-bold text-gray-400 dark:text-gray-500 mt-0.5 uppercase tracking-wide; }
+
+  /* ── Tab bar ────────────────────────────────────────────── */
+  .tab-bar { @apply flex border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900; }
+  .tab-btn  { @apply flex-1 py-3 text-xs font-bold text-gray-400 dark:text-gray-500 border-none bg-transparent cursor-pointer transition-all duration-150 hover:text-gray-700 dark:hover:text-gray-200 border-b-2 border-transparent; font-family:'Nunito',sans-serif; }
+  .tab-btn.active { @apply text-[#085041] dark:text-[#5DCAA5] border-b-2 border-[#5DCAA5]; }
+
+  /* ── Alert boxes ────────────────────────────────────────── */
+  .alert-success { @apply rounded-2xl p-4 bg-[#E1F5EE] dark:bg-[#085041]/15 border border-[#9FE1CB] dark:border-[#085041]/30; }
+  .alert-danger  { @apply rounded-2xl p-4 bg-red-50 dark:bg-red-900/15 border border-red-200 dark:border-red-800/30; }
+  .alert-info    { @apply rounded-2xl p-4 bg-[#E6F1FB] dark:bg-[#185FA5]/15 border border-[#B5D4F4] dark:border-[#185FA5]/30; }
+  .alert-warning { @apply rounded-2xl p-4 bg-[#FAEEDA] dark:bg-[#633806]/15 border border-[#FAC775] dark:border-[#633806]/30; }
+
+  .loading { @apply flex items-center justify-center h-48 text-gray-400 dark:text-gray-600 font-bold; }
+  .divider  { @apply h-px bg-gray-100 dark:bg-gray-800 my-4; }
+}
+
+::-webkit-scrollbar       { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:3px; }
+.dark ::-webkit-scrollbar-thumb { background:#374151; }
+
+@media (max-width:640px) {
+  .sidenav { display:none; }
+  .page, .page-wide { padding:16px; }
+}
