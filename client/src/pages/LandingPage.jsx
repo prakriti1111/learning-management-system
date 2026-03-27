@@ -252,7 +252,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-[#E1F5EE] dark:bg-[#085041]/30 flex items-center justify-center text-lg">📚</div>
-            <span className="font-black text-gray-900 dark:text-white text-lg" style={{ fontFamily: 'Nunito,sans-serif' }}>Study Hub</span>
+            <span className="font-black text-gray-900 dark:text-white text-lg" style={{ fontFamily: 'Nunito,sans-serif' }}>ShikshaHub</span>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={toggle}
