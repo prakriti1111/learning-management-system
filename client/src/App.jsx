@@ -3,6 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
+import {useAuth} from './context/AuthContext'
+
+//Child Pages
+
+import ChildHome        from './pages/child/ChildHome';
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -47,7 +52,11 @@ function App() {
         <Route path="/login"    element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home"     element={<RoleHome />} />
-      </Routes>
+
+
+        {/* Child ──────────────────────────────────────────────────────────── */}
+        <Route path="/child"               element={P(['child'], ChildHome)} />
+    </Routes>
   )
 }
 
