@@ -9,6 +9,14 @@ import {useAuth} from './context/AuthContext'
 
 import ChildHome        from './pages/child/ChildHome';
 
+
+
+
+// Parent Home
+import ParentHome     from './pages/parent/ParentHome';
+
+
+
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
  
@@ -56,6 +64,11 @@ function App() {
 
         {/* Child ──────────────────────────────────────────────────────────── */}
         <Route path="/child"               element={P(['child'], ChildHome)} />
+
+
+
+        {/* Parent ─────────────────────────────────────────────────────────── */}
+        <Route path="/parent"              element={P(['parent'], ParentHome)} />
     </Routes>
   )
 }
