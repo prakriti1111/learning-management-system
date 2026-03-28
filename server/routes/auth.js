@@ -3,6 +3,8 @@ const jwt     = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const User    = require('../models/User');
 const { auth } = require('../middleware/auth');
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const router = express.Router();
 
@@ -26,6 +28,48 @@ router.post('/register', [
     res.status(201).json({ token, user });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+
+router.post('/google', async (req, res) => {
+  try {
+    const { credential, role } = req.body;
+    
+    // 1. Verify the Google Token
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    
+    const { name, email, picture, sub: googleId } = ticket.getPayload();
+
+    // 2. Find or Create the user
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create new user if they don't exist
+      user = await User.create({
+        name,
+        email,
+        role: role || 'child', // Uses role passed from frontend
+        password: Math.random().toString(36).slice(-10), // Random pass for OAuth users
+        googleId,
+        avatar: picture,
+        isActive: true
+      });
+    }
+
+    // 3. Generate JWT
+    const token = signToken(user._id);
+
+    res.status(200).json({
+      token,
+      user
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: 'Google authentication failed' });
   }
 });
 
