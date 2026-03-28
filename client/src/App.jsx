@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import { useAuth } from './context/AuthContext';
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -47,6 +49,8 @@ function App() {
         <Route path="/login"    element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home"     element={<RoleHome />} />
+
+        <Route path="/admin"    element={P(['admin'], AdminDashboard)} />
       </Routes>
   )
 }
