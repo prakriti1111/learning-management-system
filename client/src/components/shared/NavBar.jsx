@@ -58,6 +58,7 @@ export default function NavBar() {
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-[#E1F5EE] dark:bg-[#085041]/30 flex items-center justify-center text-lg">📚</div>
           <span className="font-black text-gray-900 dark:text-white text-base" style={{fontFamily:'Nunito,sans-serif'}}>
+            ShikshaHub
           </span>
         </div>
       </div>
