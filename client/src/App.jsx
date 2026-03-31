@@ -5,7 +5,13 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import { useAuth } from './context/AuthContext';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminSchools from './pages/admin/AdminSchools';
+import AdminContent from './pages/admin/AdminContent';
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
+import TeacherStudents from './pages/teacher/TeacherStudents';
+import TeacherSchedule from './pages/teacher/TeacherSchedule';
+import TeacherContent from './pages/teacher/TeacherContent';
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -51,8 +57,17 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home"     element={<RoleHome />} />
 
-        <Route path="/admin"    element={P(['admin'], AdminDashboard)} />
+
+        <Route path="/admin"               element={P(['admin'], AdminDashboard)} />
+        <Route path="/admin/users"         element={P(['admin'], AdminUsers)} />
+        <Route path="/admin/schools"       element={P(['admin'], AdminSchools)} />
+        <Route path="/admin/content"       element={P(['admin'], AdminContent)} />
+
+
         <Route path="/teacher"    element={P(['teacher','admin'], TeacherDashboard)} />
+        <Route path="/teacher"    element={P(['teacher','admin'], TeacherStudents)} />
+        <Route path="/teacher"    element={P(['teacher','admin'], TeacherSchedule)} />
+        <Route path="/teacher"    element={P(['teacher','admin'], TeacherContent)} />
       </Routes>
   )
 }
