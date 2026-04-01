@@ -8,6 +8,12 @@ import {useAuth} from './context/AuthContext'
 //Child Pages
 
 import ChildHome        from './pages/child/ChildHome';
+import ChildLesson      from './pages/child/ChildLesson';
+import ChildBadges      from './pages/child/ChildBadges';
+import ChildLeaderboard from './pages/child/ChildLeaderboard';
+import ChildQuizzes     from './pages/child/ChildQuizzes';
+import ChildFeedback    from './pages/child/ChildFeedback';
+import ChildChatbot     from './pages/child/ChildChatbot';
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -56,6 +62,12 @@ function App() {
 
         {/* Child ──────────────────────────────────────────────────────────── */}
         <Route path="/child"               element={P(['child'], ChildHome)} />
+        <Route path="/child/lesson/:id"    element={P(['child'], ChildLesson)} />
+        <Route path="/child/badges"        element={P(['child'], ChildBadges)} />
+        <Route path="/child/leaderboard"   element={P(['child'], ChildLeaderboard)} />
+        <Route path="/child/quizzes"       element={P(['child'], ChildQuizzes)} />
+        <Route path="/child/feedback"      element={P(['child'], ChildFeedback)} />
+        <Route path="/child/chat"          element={P(['child'], ChildChatbot)} />
     </Routes>
   )
 }
