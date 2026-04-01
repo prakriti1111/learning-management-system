@@ -14,6 +14,9 @@ import ChildHome        from './pages/child/ChildHome';
 
 // Parent Home
 import ParentHome     from './pages/parent/ParentHome';
+import ParentReport   from './pages/parent/ParentReport';
+import ParentCalendar from './pages/parent/ParentCalendar';
+import ParentFeedback from './pages/parent/ParentFeedback';
 
 
 
@@ -69,6 +72,9 @@ function App() {
 
         {/* Parent ─────────────────────────────────────────────────────────── */}
         <Route path="/parent"              element={P(['parent'], ParentHome)} />
+        <Route path="/parent/report"       element={P(['parent'], ParentReport)} />
+        <Route path="/parent/calendar"     element={P(['parent'], ParentCalendar)} />
+        <Route path="/parent/feedback"     element={P(['parent'], ParentFeedback)} />
     </Routes>
   )
 }
