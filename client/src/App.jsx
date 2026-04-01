@@ -12,6 +12,8 @@ import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import TeacherStudents from './pages/teacher/TeacherStudents';
 import TeacherSchedule from './pages/teacher/TeacherSchedule';
 import TeacherContent from './pages/teacher/TeacherContent';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
+import AdminReports from './pages/admin/AdminReports';
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -62,12 +64,14 @@ function App() {
         <Route path="/admin/users"         element={P(['admin'], AdminUsers)} />
         <Route path="/admin/schools"       element={P(['admin'], AdminSchools)} />
         <Route path="/admin/content"       element={P(['admin'], AdminContent)} />
+        <Route path="/admin/analytics"       element={P(['admin'], AdminAnalytics)} />
+        <Route path="/admin/reports"       element={P(['admin'], AdminReports)} />
 
 
         <Route path="/teacher"    element={P(['teacher','admin'], TeacherDashboard)} />
-        <Route path="/teacher"    element={P(['teacher','admin'], TeacherStudents)} />
-        <Route path="/teacher"    element={P(['teacher','admin'], TeacherSchedule)} />
-        <Route path="/teacher"    element={P(['teacher','admin'], TeacherContent)} />
+        <Route path="/teacher/students"    element={P(['teacher','admin'], TeacherStudents)} />
+        <Route path="/teacher/schedule"    element={P(['teacher','admin'], TeacherSchedule)} />
+        <Route path="/teacher/content"    element={P(['teacher','admin'], TeacherContent)} />
       </Routes>
   )
 }
