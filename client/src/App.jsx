@@ -1,11 +1,9 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandingPage from './pages/LandingPage'
-import LoginPage from './pages/auth/LoginPage';
-import RegisterPage from './pages/auth/RegisterPage';
-import {useAuth} from './context/AuthContext'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 
-//Child Pages
+import LandingPage  from './pages/LandingPage';
+import LoginPage    from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
 
 import ChildHome        from './pages/child/ChildHome';
 import ChildLesson      from './pages/child/ChildLesson';
@@ -14,32 +12,30 @@ import ChildLeaderboard from './pages/child/ChildLeaderboard';
 import ChildQuizzes     from './pages/child/ChildQuizzes';
 import ChildFeedback    from './pages/child/ChildFeedback';
 import ChildChatbot     from './pages/child/ChildChatbot';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import { useAuth } from './context/AuthContext';
-import AdminUsers from './pages/admin/AdminUsers';
-import AdminSchools from './pages/admin/AdminSchools';
-import AdminContent from './pages/admin/AdminContent';
+
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
-import TeacherStudents from './pages/teacher/TeacherStudents';
-import TeacherSchedule from './pages/teacher/TeacherSchedule';
-import TeacherContent from './pages/teacher/TeacherContent';
-import AdminAnalytics from './pages/admin/AdminAnalytics';
-import AdminReports from './pages/admin/AdminReports';
+import TeacherStudents  from './pages/teacher/TeacherStudents';
+import TeacherSchedule  from './pages/teacher/TeacherSchedule';
+import TeacherContent   from './pages/teacher/TeacherContent';
 
-
-
-
-// Parent Home
 import ParentHome     from './pages/parent/ParentHome';
 import ParentReport   from './pages/parent/ParentReport';
 import ParentCalendar from './pages/parent/ParentCalendar';
 import ParentFeedback from './pages/parent/ParentFeedback';
 
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers     from './pages/admin/AdminUsers';
+import AdminSchools   from './pages/admin/AdminSchools';
+import AdminContent   from './pages/admin/AdminContent';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
+import AdminReports   from './pages/admin/AdminReports';
 
-
+// ── Protected route wrapper ────────────────────────────────────────────────────
+// Redirects to /login if not authenticated.
+// Redirects to role home if authenticated but wrong role.
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
- 
+
   if (loading) {
     return (
       <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', fontFamily:'Nunito,sans-serif', color:'#888' }}>
@@ -47,17 +43,20 @@ function ProtectedRoute({ children, roles }) {
       </div>
     );
   }
- 
+
+  // Not logged in → go to login
   if (!user) return <Navigate to="/login" replace />;
- 
+
+  // Logged in but wrong role → redirect to own home
   if (roles && !roles.includes(user.role)) {
     const homes = { child:'/child', teacher:'/teacher', parent:'/parent', admin:'/admin' };
     return <Navigate to={homes[user.role] || '/login'} replace />;
   }
- 
+
   return children;
 }
 
+// ── Role-based home redirect ───────────────────────────────────────────────────
 function RoleHome() {
   const { user, loading } = useAuth();
   if (loading) return null;
@@ -65,54 +64,52 @@ function RoleHome() {
   const homes = { child:'/child', teacher:'/teacher', parent:'/parent', admin:'/admin' };
   return <Navigate to={homes[user.role] || '/'} replace />;
 }
- 
+
+// Helper to reduce repetition
 const P = (roles, Comp) => (
   <ProtectedRoute roles={roles}><Comp /></ProtectedRoute>
 );
 
-
-
-function App() {
-
+export default function App() {
   return (
     <Routes>
-        <Route path="/" element={<LandingPage/>} />
-        <Route path="/login"    element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home"     element={<RoleHome />} />
+      {/* Public ─────────────────────────────────────────────────────────── */}
+      <Route path="/"         element={<LandingPage />} />
+      <Route path="/login"    element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/home"     element={<RoleHome />} />
 
+      {/* Child ──────────────────────────────────────────────────────────── */}
+      <Route path="/child"               element={P(['child'], ChildHome)} />
+      <Route path="/child/lesson/:id"    element={P(['child'], ChildLesson)} />
+      <Route path="/child/badges"        element={P(['child'], ChildBadges)} />
+      <Route path="/child/leaderboard"   element={P(['child'], ChildLeaderboard)} />
+      <Route path="/child/quizzes"       element={P(['child'], ChildQuizzes)} />
+      <Route path="/child/feedback"      element={P(['child'], ChildFeedback)} />
+      <Route path="/child/chat"          element={P(['child'], ChildChatbot)} />
 
-        {/* Child ──────────────────────────────────────────────────────────── */}
-        <Route path="/child"               element={P(['child'], ChildHome)} />
+      {/* Teacher ────────────────────────────────────────────────────────── */}
+      <Route path="/teacher"             element={P(['teacher','admin'], TeacherDashboard)} />
+      <Route path="/teacher/students"    element={P(['teacher','admin'], TeacherStudents)} />
+      <Route path="/teacher/schedule"    element={P(['teacher','admin'], TeacherSchedule)} />
+      <Route path="/teacher/content"     element={P(['teacher','admin'], TeacherContent)} />
 
+      {/* Parent ─────────────────────────────────────────────────────────── */}
+      <Route path="/parent"              element={P(['parent'], ParentHome)} />
+      <Route path="/parent/report"       element={P(['parent'], ParentReport)} />
+      <Route path="/parent/calendar"     element={P(['parent'], ParentCalendar)} />
+      <Route path="/parent/feedback"     element={P(['parent'], ParentFeedback)} />
 
+      {/* Admin ──────────────────────────────────────────────────────────── */}
+      <Route path="/admin"               element={P(['admin'], AdminDashboard)} />
+      <Route path="/admin/users"         element={P(['admin'], AdminUsers)} />
+      <Route path="/admin/schools"       element={P(['admin'], AdminSchools)} />
+      <Route path="/admin/content"       element={P(['admin'], AdminContent)} />
+      <Route path="/admin/analytics"     element={P(['admin'], AdminAnalytics)} />
+      <Route path="/admin/reports"       element={P(['admin'], AdminReports)} />
 
-        {/* Parent ─────────────────────────────────────────────────────────── */}
-        <Route path="/parent"              element={P(['parent'], ParentHome)} />
-        <Route path="/parent/report"       element={P(['parent'], ParentReport)} />
-        <Route path="/parent/calendar"     element={P(['parent'], ParentCalendar)} />
-        <Route path="/parent/feedback"     element={P(['parent'], ParentFeedback)} />
-        <Route path="/child/lesson/:id"    element={P(['child'], ChildLesson)} />
-        <Route path="/child/badges"        element={P(['child'], ChildBadges)} />
-        <Route path="/child/leaderboard"   element={P(['child'], ChildLeaderboard)} />
-        <Route path="/child/quizzes"       element={P(['child'], ChildQuizzes)} />
-        <Route path="/child/feedback"      element={P(['child'], ChildFeedback)} />
-        <Route path="/child/chat"          element={P(['child'], ChildChatbot)} />
+      {/* Fallback ───────────────────────────────────────────────────────── */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
-        <Route path="/admin"               element={P(['admin'], AdminDashboard)} />
-        <Route path="/admin/users"         element={P(['admin'], AdminUsers)} />
-        <Route path="/admin/schools"       element={P(['admin'], AdminSchools)} />
-        <Route path="/admin/content"       element={P(['admin'], AdminContent)} />
-        <Route path="/admin/analytics"       element={P(['admin'], AdminAnalytics)} />
-        <Route path="/admin/reports"       element={P(['admin'], AdminReports)} />
-
-
-        <Route path="/teacher"    element={P(['teacher','admin'], TeacherDashboard)} />
-        <Route path="/teacher/students"    element={P(['teacher','admin'], TeacherStudents)} />
-        <Route path="/teacher/schedule"    element={P(['teacher','admin'], TeacherSchedule)} />
-        <Route path="/teacher/content"    element={P(['teacher','admin'], TeacherContent)} />
-      </Routes>
-  )
+  );
 }
-
-export default App
