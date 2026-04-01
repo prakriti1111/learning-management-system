@@ -26,6 +26,17 @@ import TeacherContent from './pages/teacher/TeacherContent';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminReports from './pages/admin/AdminReports';
 
+
+
+
+// Parent Home
+import ParentHome     from './pages/parent/ParentHome';
+import ParentReport   from './pages/parent/ParentReport';
+import ParentCalendar from './pages/parent/ParentCalendar';
+import ParentFeedback from './pages/parent/ParentFeedback';
+
+
+
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
  
@@ -73,6 +84,14 @@ function App() {
 
         {/* Child ──────────────────────────────────────────────────────────── */}
         <Route path="/child"               element={P(['child'], ChildHome)} />
+
+
+
+        {/* Parent ─────────────────────────────────────────────────────────── */}
+        <Route path="/parent"              element={P(['parent'], ParentHome)} />
+        <Route path="/parent/report"       element={P(['parent'], ParentReport)} />
+        <Route path="/parent/calendar"     element={P(['parent'], ParentCalendar)} />
+        <Route path="/parent/feedback"     element={P(['parent'], ParentFeedback)} />
         <Route path="/child/lesson/:id"    element={P(['child'], ChildLesson)} />
         <Route path="/child/badges"        element={P(['child'], ChildBadges)} />
         <Route path="/child/leaderboard"   element={P(['child'], ChildLeaderboard)} />
