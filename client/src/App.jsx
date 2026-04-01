@@ -8,6 +8,23 @@ import {useAuth} from './context/AuthContext'
 //Child Pages
 
 import ChildHome        from './pages/child/ChildHome';
+import ChildLesson      from './pages/child/ChildLesson';
+import ChildBadges      from './pages/child/ChildBadges';
+import ChildLeaderboard from './pages/child/ChildLeaderboard';
+import ChildQuizzes     from './pages/child/ChildQuizzes';
+import ChildFeedback    from './pages/child/ChildFeedback';
+import ChildChatbot     from './pages/child/ChildChatbot';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import { useAuth } from './context/AuthContext';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminSchools from './pages/admin/AdminSchools';
+import AdminContent from './pages/admin/AdminContent';
+import TeacherDashboard from './pages/teacher/TeacherDashboard';
+import TeacherStudents from './pages/teacher/TeacherStudents';
+import TeacherSchedule from './pages/teacher/TeacherSchedule';
+import TeacherContent from './pages/teacher/TeacherContent';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
+import AdminReports from './pages/admin/AdminReports';
 
 
 
@@ -75,7 +92,26 @@ function App() {
         <Route path="/parent/report"       element={P(['parent'], ParentReport)} />
         <Route path="/parent/calendar"     element={P(['parent'], ParentCalendar)} />
         <Route path="/parent/feedback"     element={P(['parent'], ParentFeedback)} />
+        <Route path="/child/lesson/:id"    element={P(['child'], ChildLesson)} />
+        <Route path="/child/badges"        element={P(['child'], ChildBadges)} />
+        <Route path="/child/leaderboard"   element={P(['child'], ChildLeaderboard)} />
+        <Route path="/child/quizzes"       element={P(['child'], ChildQuizzes)} />
+        <Route path="/child/feedback"      element={P(['child'], ChildFeedback)} />
+        <Route path="/child/chat"          element={P(['child'], ChildChatbot)} />
     </Routes>
+        <Route path="/admin"               element={P(['admin'], AdminDashboard)} />
+        <Route path="/admin/users"         element={P(['admin'], AdminUsers)} />
+        <Route path="/admin/schools"       element={P(['admin'], AdminSchools)} />
+        <Route path="/admin/content"       element={P(['admin'], AdminContent)} />
+        <Route path="/admin/analytics"       element={P(['admin'], AdminAnalytics)} />
+        <Route path="/admin/reports"       element={P(['admin'], AdminReports)} />
+
+
+        <Route path="/teacher"    element={P(['teacher','admin'], TeacherDashboard)} />
+        <Route path="/teacher/students"    element={P(['teacher','admin'], TeacherStudents)} />
+        <Route path="/teacher/schedule"    element={P(['teacher','admin'], TeacherSchedule)} />
+        <Route path="/teacher/content"    element={P(['teacher','admin'], TeacherContent)} />
+      </Routes>
   )
 }
 
