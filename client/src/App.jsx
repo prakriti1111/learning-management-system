@@ -3,6 +3,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
+import {useAuth} from './context/AuthContext'
+
+//Child Pages
+
+import ChildHome        from './pages/child/ChildHome';
+import ChildLesson      from './pages/child/ChildLesson';
+import ChildBadges      from './pages/child/ChildBadges';
+import ChildLeaderboard from './pages/child/ChildLeaderboard';
+import ChildQuizzes     from './pages/child/ChildQuizzes';
+import ChildFeedback    from './pages/child/ChildFeedback';
+import ChildChatbot     from './pages/child/ChildChatbot';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import { useAuth } from './context/AuthContext';
 import AdminUsers from './pages/admin/AdminUsers';
@@ -60,6 +71,15 @@ function App() {
         <Route path="/home"     element={<RoleHome />} />
 
 
+        {/* Child ──────────────────────────────────────────────────────────── */}
+        <Route path="/child"               element={P(['child'], ChildHome)} />
+        <Route path="/child/lesson/:id"    element={P(['child'], ChildLesson)} />
+        <Route path="/child/badges"        element={P(['child'], ChildBadges)} />
+        <Route path="/child/leaderboard"   element={P(['child'], ChildLeaderboard)} />
+        <Route path="/child/quizzes"       element={P(['child'], ChildQuizzes)} />
+        <Route path="/child/feedback"      element={P(['child'], ChildFeedback)} />
+        <Route path="/child/chat"          element={P(['child'], ChildChatbot)} />
+    </Routes>
         <Route path="/admin"               element={P(['admin'], AdminDashboard)} />
         <Route path="/admin/users"         element={P(['admin'], AdminUsers)} />
         <Route path="/admin/schools"       element={P(['admin'], AdminSchools)} />
