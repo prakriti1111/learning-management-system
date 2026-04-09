@@ -1,7 +1,8 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const connectDB = require("./config/db");
+require('dotenv').config();
+const express  = require('express');
+const cors     = require('cors');
+const mongoose = require('mongoose');
+const cron     = require('node-cron');
 
 const app = express();
 
@@ -25,14 +26,31 @@ app.use('/api/feedback',  require('./routes/feedback'));
 app.use('/api/ai',        require('./routes/ai'));
 app.use('/api/analytics', require('./routes/analytics'));
 
-dotenv.config();
+app.get('/api/health', (_, res) =>
+  res.json({ status: 'ok', time: new Date().toISOString() })
+);
 
-// CONNECT DATABASE
-connectDB();
-
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: err.message || 'Internal server error' });
 });
+
+cron.schedule('30 2 * * 0', async () => {
+  try {
+    const { generateWeeklyParentReports } = require('./services/reportService');
+    await generateWeeklyParentReports();
+  } catch (e) {
+    console.error('[CRON] Weekly reports failed:', e.message);
+  }
+}, { timezone: 'UTC' });
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('✅ MongoDB connected');
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+  })
+  .catch(err => {
+    console.error('❌ DB connection failed:', err.message);
+    process.exit(1);
+  });
