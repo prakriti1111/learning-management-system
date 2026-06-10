@@ -12,8 +12,8 @@ openai==1.3.5
 sentence-transformers==2.2.2
 
 # Whisper voice transcription - 'small' model = 244MB download
-openai-whisper==20231117
-ffmpeg-python==0.2.0
+# openai-whisper==20231117
+# ffmpeg-python==0.2.0
 # Also install system ffmpeg:
 #   Linux:  sudo apt install ffmpeg
 #   Mac:    brew install ffmpeg
