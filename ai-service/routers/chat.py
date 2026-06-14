@@ -30,15 +30,18 @@ class ChatRequest(BaseModel):
 
 @router.post("")
 async def chat(req: ChatRequest):
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         return {"reply": "Hi! I am Buddy. I am not fully set up yet. Please ask your teacher for help! 🙏"}
     try:
-        client = OpenAI(api_key=api_key)
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.groq.com/openai/v1"
+        )
         system = {"role": "system", "content": f"{SYSTEM_PROMPT}\nLanguage preference: {req.language}"}
         history = [{"role": m.role, "content": m.content} for m in req.messages[-10:]]
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="llama-3.1-8b-instant",
             max_tokens=200,
             temperature=0.7,
             messages=[system] + history,

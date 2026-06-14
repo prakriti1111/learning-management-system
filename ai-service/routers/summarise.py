@@ -20,11 +20,14 @@ class SummariseRequest(BaseModel):
 
 @router.post("")
 async def summarise(req: SummariseRequest):
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         return {"summary": f"{req.childName} is working hard this week!", "tips": [], "encouragement": "Keep it up!"}
     try:
-        client     = OpenAI(api_key=api_key)
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.groq.com/openai/v1"
+        )
         lang_label = "Hindi" if req.language == "hi" else "English"
         strong_str = ", ".join(req.strongAreas) if req.strongAreas else "still exploring"
         weak_str   = ", ".join(req.weakAreas)   if req.weakAreas   else "nothing specific"
@@ -43,7 +46,7 @@ Respond with ONLY valid JSON (no markdown, no backticks, no extra text):
 {{"summary":"2-3 warm parent-friendly sentences","tips":["practical home tip 1","tip 2","tip 3"],"encouragement":"one warm sentence"}}"""
 
         res = client.chat.completions.create(
-            model="gpt-4o-mini", max_tokens=500, temperature=0.65,
+            model="llama-3.1-8b-instant", max_tokens=500, temperature=0.65,
             messages=[{"role": "user", "content": prompt}],
         )
         raw = res.choices[0].message.content.strip()
