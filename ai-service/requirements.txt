@@ -6,7 +6,7 @@ python-multipart==0.0.6
 
 # OpenAI (chatbot + parent summaries)
 # SETUP: platform.openai.com -> API Keys
-openai==1.3.5
+openai>=1.30.0
 
 # NLP grader - downloads ~420MB multilingual model on first run
 sentence-transformers==2.2.2
