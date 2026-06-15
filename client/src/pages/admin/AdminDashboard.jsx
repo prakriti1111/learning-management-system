@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
 import api from '../../api/axios';
-import NavBar from '../../components/shared/Navbar';
+import NavBar from '../../components/shared/NavBar';
 
 
 export default function AdminDashboard() {
