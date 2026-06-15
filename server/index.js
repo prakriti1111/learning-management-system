@@ -32,6 +32,10 @@ app.get('/api/health', (_, res) =>
   res.json({ status: 'ok', time: new Date().toISOString() })
 );
 
+app.get('/', (req, res) => {
+  res.send('ShikshaHub Backend Running 🚀');
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: err.message || 'Internal server error' });
