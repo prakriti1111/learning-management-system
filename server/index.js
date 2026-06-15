@@ -33,7 +33,7 @@ app.get('/api/health', (_, res) =>
 );
 
 app.get('/', (req, res) => {
-  res.send('ShikshaHub Backend Running 🚀');
+  res.send('ShikshaHub Backend Running...! 🚀');
 });
 
 app.use((err, req, res, next) => {
